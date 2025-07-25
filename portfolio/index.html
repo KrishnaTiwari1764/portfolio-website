@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishna Tiwari – Full Stack Developer</title>
+    <meta name="description" content="Krishna Tiwari – A passionate Full Stack Developer creating elegant and efficient solutions for the web using technologies like React and Node.js.">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Krishna Tiwari – Full Stack Developer">
+    <meta property="og:description" content="A passionate Full Stack Developer creating elegant and efficient solutions for the web.">
+    <meta property="og:image" content="https://i.postimg.cc/xNQvWQbZ/632-A5588.jpg">
+    <meta property="og:url" content="https://your-domain.com">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB%3C/text%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- React & Babel Scripts -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #111827; 
+            --bg-light: #1f2937;
+            --primary: #2dd4bf; 
+            --secondary: #60a5fa;
+            --text-light: #f3f4f6;
+            --text-dark: #9ca3af;
+            --card-bg: rgba(31, 41, 55, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode {
+            --bg-dark: #f9fafb; /* gray-50 */
+            --bg-light: #f3f4f6; /* gray-100 */
+            --primary: #14b8a6; /* teal-500 */
+            --secondary: #3b82f6; /* blue-500 */
+            --text-light: #1f2937; /* gray-800 */
+            --text-dark: #6b7280; /* gray-500 */
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-light); transition: background-color 0.3s ease, color 0.3s ease; }
+        
+        .text-gradient { background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .bg-glass { background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border-color); transition: background-color 0.3s ease; }
+        
+        .scroll-reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55), transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+        
+        .hero-bg {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 20%, hsla(174, 72%, 53%, 0.15) 0px, transparent 40%),
+                radial-gradient(circle at 85% 80%, hsla(217, 89%, 61%, 0.15) 0px, transparent 40%);
+            transition: background-color 0.3s ease;
+        }
+        
+        .timeline-item::before { content: ''; position: absolute; left: -31px; top: 6px; width: 22px; height: 22px; border-radius: 50%; background-color: var(--bg-light); border: 4px solid var(--primary); transition: background-color 0.3s ease, border-color 0.3s ease; }
+        
+        .tech-icon { filter: grayscale(100%); opacity: 0.6; transition: all 0.3s ease; }
+        .tech-icon:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.1); }
+
+        .project-filter-btn { transition: all 0.3s ease; }
+        .project-filter-btn.active { background-color: var(--primary); color: var(--bg-dark) !important; }
+        
+        .typewriter-caret { border-right: 0.15em solid var(--primary); animation: blink-caret .75s step-end infinite; }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary); } }
+
+        #back-to-top { position: fixed; bottom: -50px; right: 20px; transition: bottom 0.5s ease-in-out; }
+        #back-to-top.visible { bottom: 20px; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-black/30 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" id="nav-name" class="text-2xl font-bold text-white tracking-wider"></a>
+            <nav class="hidden md:flex items-center space-x-8 text-lg">
+                <a href="#about" class="hover:text-primary transition-colors duration-300">About</a>
+                <a href="#skills" class="hover:text-primary transition-colors duration-300">Skills</a>
+                <a href="#journey" class="hover:text-primary transition-colors duration-300">Journey</a>
+                <a href="#projects" class="hover:text-primary transition-colors duration-300">Projects</a>
+                <a href="#contact" class="hover:text-primary transition-colors duration-300">Contact</a>
+                <button id="theme-toggle" class="text-white hover:text-primary transition-colors duration-300">
+                    <i class="fas fa-moon text-2xl"></i>
+                </button>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900/90">
+            <a href="#about" class="block py-3 px-6 text-sm hover:bg-gray-800">About</a>
+            <a href="#skills" class="block py-3 px-6 text-sm hover:bg-gray-800">Skills</a>
+            <a href="#journey" class="block py-3 px-6 text-sm hover:bg-gray-800">Journey</a>
+            <a href="#projects" class="block py-3 px-6 text-sm hover:bg-gray-800">Projects</a>
+            <a href="#contact" class="block py-3 px-6 text-sm hover:bg-gray-800">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center hero-bg">
+            <div class="container mx-auto px-6 text-center">
+                <img id="hero-img" src="" alt="Krishna" class="w-44 h-44 mx-auto rounded-full border-4 border-primary/50 shadow-2xl mb-6 object-cover">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-text-light leading-tight mb-2">
+                    Krishna Tiwari
+                </h1>
+                <p class="text-xl md:text-2xl text-gradient font-semibold mt-2 mb-8 h-8">
+                    <span id="typewriter-text"></span><span class="typewriter-caret"></span>
+                </p>
+                <p class="max-w-3xl mx-auto text-lg text-text-dark mb-10">
+                    I build high-performance, scalable, and beautiful web applications from the ground up. Let's turn your vision into a digital reality.
+                </p>
+                <div class="flex justify-center items-center space-x-4">
+                    <a href="#projects" class="bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 px-10 rounded-full text-lg hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 transform hover:scale-105">
+                        View My Work
+                    </a>
+                    <a id="resume-download-hero" href="#" download class="bg-gray-700 text-white font-bold py-4 px-10 rounded-full text-lg hover:bg-gray-600 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-download mr-2"></i> Resume
+                    </a>
+                </div>
+                <div id="hero-socials" class="flex justify-center space-x-6 mt-16"></div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-24 bg-bg-light scroll-reveal">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center gap-16">
+                    <div class="md:w-1/2">
+                        <h2 class="text-4xl font-bold text-text-light mb-2">About Me</h2>
+                        <p class="text-gradient font-semibold text-lg mb-8">My Story</p>
+                        <div id="about-text" class="text-lg text-text-dark space-y-4"></div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img id="about-img" src="" alt="About me" class="rounded-lg shadow-2xl w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 scroll-reveal">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-text-light mb-2">Core Competencies</h2>
+                <p class="text-center text-gradient font-semibold text-lg mb-12">The Skills I Bring to the Table</p>
+                <div id="skills-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Skills will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Journey Section -->
+        <section id="journey" class="py-24 bg-bg-light scroll-reveal">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-text-light mb-2">My Journey</h2>
+                <p class="text-center text-gradient font-semibold text-lg mb-16">Education & Experience</p>
+                <div id="journey-container" class="relative max-w-2xl mx-auto border-l-2 border-primary/30 pl-10">
+                     <!-- Journey items will be injected here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tech Stack Logos Section -->
+        <section id="tech-stack" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-3xl font-bold text-text-light mb-2 scroll-reveal">My Favorite Tools</h2>
+                 <p class="text-text-dark mb-12 scroll-reveal" style="transition-delay: 100ms;">A quick look at the tech I enjoy using</p>
+                <div id="tech-icons-container" class="flex justify-center items-center flex-wrap gap-x-8 gap-y-6">
+                    <!-- Tech icons will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section (Powered by React) -->
+        <section id="projects" class="py-24 bg-bg-light scroll-reveal">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-text-light mb-2">Featured Projects</h2>
+                <p class="text-center text-gradient font-semibold text-lg mb-12">A Selection of My Work</p>
+                <div id="projects-react-root"></div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 scroll-reveal">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-text-light mb-2">Let's Build Something Great</h2>
+                <p class="text-center text-gradient font-semibold text-lg mb-12">Have a project in mind? I'd love to hear about it.</p>
+                
+                <div class="max-w-xl mx-auto bg-glass p-8 rounded-xl">
+                    <form id="contact-form" class="space-y-6">
+                        <!-- The access key is set dynamically by the script below -->
+                        <input type="hidden" name="access_key" value="">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-text-dark">Your Name</label>
+                            <input type="text" name="name" id="name" required class="mt-1 block w-full bg-gray-900/50 border-gray-600 rounded-md shadow-sm py-3 px-4 text-text-light focus:outline-none focus:ring-2 focus:ring-primary transition">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-text-dark">Your Email</label>
+                            <input type="email" name="email" id="email" required class="mt-1 block w-full bg-gray-900/50 border-gray-600 rounded-md shadow-sm py-3 px-4 text-text-light focus:outline-none focus:ring-2 focus:ring-primary transition">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-text-dark">Message</label>
+                            <textarea name="message" id="message" rows="4" required class="mt-1 block w-full bg-gray-900/50 border-gray-600 rounded-md shadow-sm py-3 px-4 text-text-light focus:outline-none focus:ring-2 focus:ring-primary transition"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" id="contact-submit-button" class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-primary/20 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all duration-300 ease-in-out">
+                                Send Message
+                            </button>
+                            <p id="contact-status" class="mt-4 text-sm text-text-dark"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bg-light py-6">
+        <div class="container mx-auto px-6 text-center text-text-dark">
+            <div id="footer-socials" class="flex justify-center space-x-6 mb-4"></div>
+            <p id="footer-text"></p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="bg-primary text-white w-12 h-12 rounded-full z-50 flex items-center justify-center shadow-lg hover:bg-opacity-80 transition">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+
+    <script>
+        // ==================================================================
+        // === PORTFOLIO DATA (EDIT YOUR DETAILS HERE) ======================
+        // ==================================================================
+        const portfolioData = {
+            name: "Krishna Tiwari",
+            resumeUrl: "./assets/Krishna_Tiwari_Resume.pdf", 
+            heroImage: "https://i.postimg.cc/xNQvWQbZ/632-A5588.jpg",
+            aboutImage: "https://i.postimg.cc/xNQvWQbZ/632-A5588.jpg",
+            typewriterSubtitles: ["Full Stack Developer", "Web Architect", "Java Enthusiast", "Problem Solver"],
+            aboutText: [
+                "Hello! I'm Krishna, a passionate developer based in Pune, with a strong interest in creating delightful and intuitive web experiences. My journey in tech is driven by a curiosity for how things work and a desire to build software that makes a difference.",
+                "As a recent graduate, I am proficient in the Java Full Stack and am a firm believer in being a lifelong learner. I'm always excited to explore new technologies and frameworks. From concept to deployment, I enjoy the entire process of bringing an idea to life and I am eager to contribute my skills to a professional team. Let's build something amazing together."
+            ],
+            skills: [
+                {
+                    category: "Frontend",
+                    icon: "fas fa-palette",
+                    items: ["React", "JavaScript (ES6+)", "HTML5", "CSS3", "Tailwind CSS"]
+                },
+                {
+                    category: "Backend",
+                    icon: "fas fa-server",
+                    items: ["Java", "Spring Boot", "Hibernate", "Node.js", "Express.js"]
+                },
+                {
+                    category: "Databases",
+                    icon: "fas fa-database",
+                    items: ["MySQL", "MongoDB", "PostgreSQL"]
+                },
+                {
+                    category: "Tools & DevOps",
+                    icon: "fas fa-tools",
+                    items: ["Git & GitHub", "Docker", "Postman", "Maven", "Jira"]
+                }
+            ],
+            journey: [
+                {
+                    date: "2021 - 2024",
+                    title: "Bachelor's in Computer Engineering (BE CS)",
+                    institution: "Savitribai Phule Pune University",
+                    description: "Graduated with a focus on computer science, building a strong foundation in software development principles and algorithms."
+                },
+                {
+                    date: "2024",
+                    title: "Web Development Internship",
+                    institution: "Codsoft Pvt Ltd",
+                    description: "Completed an intensive training program covering core Java, Spring Boot, Hibernate, SQL, and front-end technologies like React and JavaScript."
+                }
+            ],
+            socials: [
+                { name: "GitHub", icon: "fab fa-github", url: "https://github.com/KrishnaTiwari1764" },
+                { name: "LinkedIn", icon: "fab fa-linkedin", url: "https://www.linkedin.com/in/krishna-tiwari-319b34227/" },
+                { name: "Twitter", icon: "fab fa-twitter", url: "https://x.com/Krishna3108200" },
+            ],
+            techStack: [
+                { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+                { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+                { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+                { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+                { name: "Spring", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
+                { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+                { name: "TailwindCSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg" },
+                { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+                { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+                { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+            ],
+            projects: [
+                { title: "E-commerce Platform", image: "https://placehold.co/600x400/111827/2dd4bf?text=E-commerce", description: "A full-featured e-commerce website built with the MERN stack, featuring product catalogs, user authentication, and a Stripe-integrated shopping cart.", tags: ["React", "Node.js", "MongoDB"], demoUrl: "#", codeUrl: "#" },
+                { title: "Real-Time Chat App", image: "https://placehold.co/600x400/111827/60a5fa?text=ChatApp", description: "A responsive chat application using WebSockets for instant messaging and user presence indicators.", tags: ["React", "TailwindCSS", "Node.js"], demoUrl: "#", codeUrl: "#" },
+               
+                { title: "AI Voice Assistant for Blind People", image: "https://placehold.co/600x400/111827/2dd4bf?text=AI+Voice+Assistant", description: "An accessible voice-controlled assistant to help visually impaired users with daily tasks like reading text, identifying objects, and navigating surroundings using AI-powered computer vision and speech synthesis.", tags: ["Python", "AI/ML", "OpenCV"], demoUrl: "#", codeUrl: "#" },
+                
+            ],
+            footerText: `Designed & Built by Krishna Tiwari © ${new Date().getFullYear()}`
+        };
+        
+        window.portfolioData = portfolioData;
+
+        // ==================================================================
+        // === MAIN SCRIPT (NON-REACT) ======================================
+        // ==================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- YOUR WEB3FORMS ACCESS KEY IS ADDED HERE ---
+            const W3F_ACCESS_KEY = 'b255eb4c-9a31-4ab4-a7f1-f75541b8fa33'; 
+            
+            const contactForm = document.getElementById('contact-form');
+            contactForm.querySelector('input[name="access_key"]').value = W3F_ACCESS_KEY;
+            
+            // --- Populate initial data ---
+            document.getElementById('nav-name').textContent = portfolioData.name.split(' ')[0];
+            document.getElementById('hero-img').src = portfolioData.heroImage;
+            document.getElementById('about-img').src = portfolioData.aboutImage;
+            document.getElementById('footer-text').textContent = portfolioData.footerText;
+            document.getElementById('resume-download-hero').href = portfolioData.resumeUrl;
+
+            const heroSocialsContainer = document.getElementById('hero-socials');
+            const footerSocialsContainer = document.getElementById('footer-socials');
+            let socialLinksHtml = portfolioData.socials.map(social => 
+                `<a href="${social.url}" target="_blank" rel="noopener noreferrer" aria-label="${social.name}" class="text-text-dark hover:text-primary transition-colors duration-300"><i class="${social.icon} fa-2x"></i></a>`
+            ).join('');
+            heroSocialsContainer.innerHTML = socialLinksHtml;
+            footerSocialsContainer.innerHTML = socialLinksHtml.replace(/fa-2x/g, 'fa-lg');
+
+            document.getElementById('about-text').innerHTML = portfolioData.aboutText.map(p => `<p>${p}</p>`).join('');
+            
+            document.getElementById('skills-container').innerHTML = portfolioData.skills.map(skillCat => `
+                <div class="bg-glass p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-text-light mb-4 flex items-center">
+                        <i class="${skillCat.icon} text-primary mr-3"></i>
+                        ${skillCat.category}
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${skillCat.items.map(item => `<span class="bg-primary/10 text-primary text-sm font-medium px-3 py-1 rounded-full">${item}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('tech-icons-container').innerHTML = portfolioData.techStack.map((tech, index) => `
+                <div class="scroll-reveal" style="transition-delay: ${index * 50}ms;">
+                    <img src="${tech.icon}" alt="${tech.name}" class="h-12 w-12 md:h-16 md:w-16 tech-icon object-contain" title="${tech.name}">
+                </div>
+            `).join('');
+            
+            document.getElementById('journey-container').innerHTML = portfolioData.journey.map(item => `
+                <div class="timeline-item mb-12">
+                    <p class="text-sm text-primary font-semibold">${item.date}</p>
+                    <h3 class="text-xl font-bold text-text-light mt-1">${item.title}</h3>
+                    <p class="text-md text-text-dark font-medium mb-2">${item.institution}</p>
+                    <p class="text-text-dark">${item.description}</p>
+                </div>
+            `).join('');
+
+            // --- Mobile Menu ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') mobileMenu.classList.add('hidden');
+            });
+
+            // --- Scroll Animations ---
+            const revealElements = document.querySelectorAll('.scroll-reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            revealElements.forEach(el => observer.observe(el));
+            
+            // --- Contact Form Logic ---
+            const submitButton = document.getElementById('contact-submit-button');
+            const statusMessage = document.getElementById('contact-status');
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(contactForm);
+                const data = Object.fromEntries(formData.entries());
+                
+                statusMessage.textContent = 'Sending...';
+                statusMessage.style.color = 'var(--text-dark)';
+                submitButton.disabled = true;
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        statusMessage.textContent = 'Message sent successfully! Thank you.';
+                        statusMessage.style.color = 'var(--primary)';
+                        contactForm.reset();
+                        contactForm.querySelector('input[name="access_key"]').value = W3F_ACCESS_KEY;
+                    } else {
+                        statusMessage.textContent = 'Something went wrong. Please try again.';
+                        statusMessage.style.color = '#ef4444'; // red-500
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    statusMessage.textContent = 'Something went wrong. Please try again.';
+                    statusMessage.style.color = '#ef4444'; // red-500
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                });
+            });
+
+            // --- Theme Toggler ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                const isLight = document.body.classList.contains('light-mode');
+                themeIcon.classList.toggle('fa-moon', !isLight);
+                themeIcon.classList.toggle('fa-sun', isLight);
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            });
+            
+            // --- Typewriter Effect ---
+            const typewriterTextEl = document.getElementById('typewriter-text');
+            let textIndex = 0;
+            let charIndex = 0;
+            const type = () => {
+                const currentText = portfolioData.typewriterSubtitles[textIndex];
+                if (charIndex < currentText.length) {
+                    typewriterTextEl.textContent += currentText.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(type, 100);
+                } else {
+                    setTimeout(erase, 2000);
+                }
+            };
+            const erase = () => {
+                const currentText = portfolioData.typewriterSubtitles[textIndex];
+                if (charIndex > 0) {
+                    typewriterTextEl.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                    setTimeout(erase, 50);
+                } else {
+                    textIndex = (textIndex + 1) % portfolioData.typewriterSubtitles.length;
+                    setTimeout(type, 500);
+                }
+            };
+            type();
+
+            // --- Back to Top Button ---
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if(window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+    
+    <!-- 
+    ==================================================================
+    === REACT COMPONENT FOR THE PROJECTS SECTION =====================
+    ==================================================================
+    -->
+    <script type="text/babel">
+        function ProjectCard({ project }) {
+            const { image, title, description, tags, demoUrl, codeUrl } = project;
+            return (
+                <div className="bg-glass rounded-xl overflow-hidden shadow-lg group transition-all duration-300 hover:shadow-primary/20 hover:-translate-y-2 flex flex-col">
+                    <div className="overflow-hidden">
+                       <img src={image} alt={title} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+                    </div>
+                    <div className="p-6 flex flex-col flex-grow">
+                        <h3 className="text-xl font-bold mb-2 text-text-light">{title}</h3>
+                        <p className="text-text-dark mb-4 text-sm flex-grow">{description}</p>
+                        <div className="mb-4">
+                            {tags.map(tag => <span key={tag} className="bg-primary/10 text-primary text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">{tag}</span>)}
+                        </div>
+                        <div className="flex flex-wrap gap-2 items-center mt-auto">
+                            <a href={demoUrl} target="_blank" rel="noopener noreferrer" className="bg-gray-700 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors text-xs font-semibold">Live Demo</a>
+                            <a href={codeUrl} target="_blank" rel="noopener noreferrer" className="text-text-dark py-2 px-3 rounded-lg hover:text-white transition-colors text-xs font-semibold">View Code</a>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ProjectsSection() {
+            const allProjects = window.portfolioData.projects;
+            const allTags = ['All', ...new Set(allProjects.flatMap(p => p.tags))];
+            
+            const [filteredProjects, setFilteredProjects] = React.useState(allProjects);
+            const [activeFilter, setActiveFilter] = React.useState('All');
+            const [isFading, setIsFading] = React.useState(false);
+
+            const handleFilter = (tag) => {
+                setActiveFilter(tag);
+                setIsFading(true); 
+                setTimeout(() => {
+                    if (tag === 'All') {
+                        setFilteredProjects(allProjects);
+                    } else {
+                        setFilteredProjects(allProjects.filter(p => p.tags.includes(tag)));
+                    }
+                    setIsFading(false);
+                }, 300); 
+            };
+
+            return (
+                <div>
+                    <div className="flex justify-center flex-wrap gap-2 mb-12">
+                        {allTags.map(tag => (
+                            <button 
+                                key={tag} 
+                                onClick={() => handleFilter(tag)}
+                                className={`project-filter-btn px-4 py-2 rounded-full text-sm font-semibold ${activeFilter === tag ? 'active' : 'bg-glass text-text-light hover:bg-primary/20'}`}
+                            >
+                                {tag}
+                            </button>
+                        ))}
+                    </div>
+                    <div 
+                        className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300 ${isFading ? 'opacity-0' : 'opacity-100'}`}
+                    >
+                        {filteredProjects.map(project => (
+                            <ProjectCard key={project.title} project={project} />
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<ProjectsSection />, document.getElementById('projects-react-root'));
+    </script>
+</body>
+</html>
